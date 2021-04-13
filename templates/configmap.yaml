@@ -36,8 +36,13 @@ data:
     http_access deny to_localhost
 
     # Allow access from client networks to allowed sites
+    {{- if .Values.proxy.restrictDomains -}}
     http_access allow clientnet Allow_sites
     http_access allow localhost Allow_sites
+    {{- else }}
+    http_access allow clientnet all
+    http_access allow localhost all
+    {{- end }}
 
     # Deny everything else
     http_access deny all
